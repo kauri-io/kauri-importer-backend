@@ -1,0 +1,14 @@
+dist: xenial
+language: python
+python:
+  - "3.6"
+sudo: false
+services:
+- docker
+branches:
+  only:
+  - master
+  - development
+  - dev2
+install:
+  - pip install -r requirements.txt
