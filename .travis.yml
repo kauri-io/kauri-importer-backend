@@ -55,7 +55,7 @@ jobs:
     - source env_setup.sh --config-file config/config-dev.json
     - cd ..
     - gcloud config set project $GOOGLE_PROJECT_ID
-    - gcloud container clusters get-credentials $ACS_NAME --zone
+    - gcloud container clusters get-credentials $ACS_NAME --zone $GOOGLE_ZONE
     script:
     - bash ./build-docker-image.sh 0.0.1
     - bash ./k8s/redeploy-k8s.sh 0.0.1
