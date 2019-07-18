@@ -47,7 +47,15 @@ jobs:
     install:
     - pip install -r requirements.txt
     script: pytest
-  # - stage: deploy-dev
-  #   install:
-  #   - pip install -r requirements.txt
-  #   script:
+  - stage: deploy-dev
+    if: "(NOT type IN (pull_request) AND (branch = development))"
+    install:
+    - pip install -r requirements.txt
+    - cd kauri-ops
+    - source env_setup.sh --config-file config/config-dev.json
+    - cd ..
+    - gcloud config set project $GOOGLE_PROJECT_ID
+    - gcloud container clusters get-credentials $ACS_NAME --zone
+    script:
+    - bash ./build-docker-image.sh 0.0.1
+    - bash ./k8s/redeploy-k8s.sh 0.0.1

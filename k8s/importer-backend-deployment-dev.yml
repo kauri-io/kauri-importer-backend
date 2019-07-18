@@ -1,0 +1,24 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: importer-backend
+  labels:
+    app: importer-backend
+    tier: compute
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: importer-backend
+        tier: compute
+    spec:
+      containers:
+      - image: REGISTRY/kauri-importer-backend:TAG
+        imagePullPolicy: Always
+        name: importer-backend
+        ports:
+        - containerPort: 8000
