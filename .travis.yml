@@ -12,3 +12,5 @@ branches:
   - dev2
 install:
   - pip install -r requirements.txt
+script:
+  - pytest
