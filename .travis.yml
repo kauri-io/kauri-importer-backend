@@ -14,7 +14,7 @@ cache:
   directories:
   - "$HOME/google-cloud-sdk/"
 before_install:
-- if [ "$TRAVIS_PULL_REQUEST" = "false" ]; openssl aes-256-cbc -K $encrypted_cbf1cfd76fa9_key -iv $encrypted_cbf1cfd76fa9_iv
+- if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then openssl aes-256-cbc -K $encrypted_cbf1cfd76fa9_key -iv $encrypted_cbf1cfd76fa9_iv
   -in credentials.tar.gz.enc -out credentials.tar.gz -d; fi
 # Create environment variable for correct distribution
 - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
@@ -41,7 +41,13 @@ before_install:
 - curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` > docker-compose
 - chmod +x docker-compose
 - sudo mv docker-compose /usr/local/bin
-install:
-- pip install -r requirements.txt
-script:
-- pytest
+jobs:
+  include:
+  - stage: tests
+    install:
+    - pip install -r requirements.txt
+    script: pytest
+  # - stage: deploy-dev
+  #   install:
+  #   - pip install -r requirements.txt
+  #   script:
