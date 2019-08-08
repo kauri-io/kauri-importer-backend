@@ -3,4 +3,4 @@ __pycache__/
 client-secret.json
 ._client-secret.json
 credentials.tar.gz
-.pyc
+*.pyc
