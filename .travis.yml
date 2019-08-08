@@ -46,7 +46,9 @@ jobs:
   - stage: "Tests"
     install:
     - pip install -r requirements.txt
-    script: pytest
+    script: 
+    - pytest
+    - python main.py
   - stage: deploy-dev
     if: "(NOT type IN (pull_request) AND (branch = development))"
     install:
@@ -60,4 +62,3 @@ jobs:
     script:
     - bash ./build-docker-image.sh 0.0.1
     - bash ./k8s/redeploy-k8s.sh 0.0.1
-    - python main.py 
