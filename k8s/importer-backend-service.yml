@@ -9,7 +9,7 @@ spec:
   sessionAffinity: "ClientIP"
   ports:
     - name: gateway
-      port: 8000
+      port: 5000
       protocol: TCP
   selector:
     app: importer-backend
