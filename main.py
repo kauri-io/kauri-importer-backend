@@ -24,6 +24,9 @@ from post_wrangler import (
 user_name = 'kauri_io'
 
 app = Flask(__name__, static_folder="public")
+# load default config file
+app.config.from_object('config.default')
+app.config.from_envvar('APP_CONFIG_FILE') # env var needs to be absolute path 
 
 cors = CORS(app)
 
@@ -137,8 +140,8 @@ def importer():
     headers = {"Content-Type": "application/json"}
     headers['X-Auth-Token'] = 'Bearer %s' % token
     # hardcoded for right now
-    kauri_gateway = 'https://api.kauri.io/graphql'
-    username = 'kauri_io'
+    # kauri_gateway = 'https://api.kauri.io/graphql'
+    # username = 'kauri_io'
     url = request.get_json()['url']
     articles_to_build = request.get_json()['articles']
     for each in articles_to_build:
@@ -164,7 +167,7 @@ def importer():
                 "operationName": "submitNewArticle"
                 }
         print(subNewArticle_req['variables']['content'])
-        p = requests.post(kauri_gateway, headers=headers, data=json.dumps(subNewArticle_req))
+        p = requests.post(KAURI_GATEWAY, headers=headers, data=json.dumps(subNewArticle_req))
         if p.ok:
             post_success = {"article_id": each["id"], "success": "True"}
             md_output.append(post_success)
