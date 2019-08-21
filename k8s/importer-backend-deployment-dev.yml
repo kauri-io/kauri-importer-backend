@@ -21,4 +21,4 @@ spec:
         imagePullPolicy: Always
         name: importer-backend
         ports:
-        - containerPort: 8000
+        - containerPort: 5000
