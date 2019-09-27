@@ -6,6 +6,7 @@ import json
 import logging
 import pprint
 import configparser
+import os
 
 from wordpress.builder.backend.wordpress import WpConverter
 from wordpress.sync import syncToKauri
@@ -25,8 +26,8 @@ user_name = 'kauri_io'
 
 app = Flask(__name__, static_folder="public")
 # load default config file
-app.config.from_object('config.default')
-app.config.from_envvar('APP_CONFIG_FILE') # env var needs to be absolute path 
+#app.config.from_object('config.default')
+#app.config.from_envvar('APP_CONFIG_FILE') # env var needs to be absolute path 
 
 cors = CORS(app)
 
@@ -140,7 +141,7 @@ def importer():
     headers = {"Content-Type": "application/json"}
     headers['X-Auth-Token'] = 'Bearer %s' % token
     # hardcoded for right now
-    # kauri_gateway = 'https://api.kauri.io/graphql'
+    kauri_gateway = os.environ['GATEWAY_ENDPOINT']
     # username = 'kauri_io'
     url = request.get_json()['url']
     articles_to_build = request.get_json()['articles']
@@ -270,11 +271,11 @@ def wp_link():
 
 @app.route('/')
 def main():
-    return app.send_static_file('index.html')
+    return "hello world" 
 
 @app.route('/<path:path>')
 def static_proxy(path):
   return send_from_directory('public', path)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host= '0.0.0.0', debug=True)

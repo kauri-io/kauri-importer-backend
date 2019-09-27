@@ -14,4 +14,6 @@ RUN pip3 install -r requirements.txt
 
 # RUN pip install -r requirements.txt
 
+ENV GATEWAY_ENDPOINT "https://api.kauri.io/graphql"
+
 CMD ["python3", "main.py"]
