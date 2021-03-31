@@ -9,7 +9,7 @@ Flask-Cors==3.0.6
 idna==2.7
 itsdangerous==0.24
 Jinja2==2.10
-lxml==4.3.3
+lxml==4.6.3
 markdownify==0.4.1
 MarkupSafe==1.0
 medium==0.3.0
